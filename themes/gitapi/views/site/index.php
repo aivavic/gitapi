@@ -3,7 +3,7 @@
 
 $this->pageTitle = Yii::app()->name;
 
-$fuel_url = 'https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc';
+$full_url = 'https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc';
 $url = 'https://api.github.com/search/repositories';
 $get = array(
     'q' => 'tetris+language:assembly',
@@ -12,7 +12,7 @@ $get = array(
 );
 $cc = new cURL();
 echo '<pre>';
-$json_result = $cc->get($fuel_url);
+$json_result = $cc->get($full_url);
 $result = json_decode($json_result);
 //var_dump($result);
 echo '</pre>';
