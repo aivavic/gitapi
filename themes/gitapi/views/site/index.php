@@ -1,85 +1,16 @@
 <?php
 /* @var $this SiteController */
-
+//$git = new GitAuth2();
+//$git->start();
 $this->pageTitle = Yii::app()->name;
 
-$fuel_url = 'https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc';
-$url = 'https://api.github.com/search/repositories';
-$get = array(
-    'q' => 'tetris+language:assembly',
-    'sort' => 'star',
-    'order' => 'desc',
-);
-$cc = new cURL();
-echo '<pre>';
-$json_result = $cc->get($fuel_url);
-$result = json_decode($json_result);
-//var_dump($result);
-echo '</pre>';
-//$cc->post('http://www.example.com','foo=bar');
-class cURL {
-    var $headers;
-    var $user_agent;
-    var $compression;
-    var $cookie_file;
-    var $proxy;
-    function cURL($cookies=TRUE,$cookie='cookies.txt',$compression='gzip',$proxy='') {
-        $this->headers[] = 'Accept: application/json';
-        $this->headers[] = 'Connection: Keep-Alive';
-        $this->headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
-        $this->user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)';
-        $this->compression=$compression;
-        $this->proxy=$proxy;
-        $this->cookies=$cookies;
-        if ($this->cookies == TRUE) $this->cookie($cookie);
-    }
-    function cookie($cookie_file) {
-        if (file_exists($cookie_file)) {
-            $this->cookie_file=$cookie_file;
-        } else {
-            fopen($cookie_file,'w') or $this->error('The cookie file could not be opened. Make sure this directory has the correct permissions');
-            $this->cookie_file=$cookie_file;
-            fclose($this->cookie_file);
-        }
-    }
-    function get($url) {
-        $process = curl_init($url);
-        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
-        curl_setopt($process, CURLOPT_HEADER, 0);
-        curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
-        curl_setopt($process,CURLOPT_ENCODING , $this->compression);
-        curl_setopt($process, CURLOPT_TIMEOUT, 30);
-        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
-        curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
-        $return = curl_exec($process);
-        curl_close($process);
-        return $return;
-    }
-    function post($url,$data) {
-        $process = curl_init($url);
-        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
-        curl_setopt($process, CURLOPT_HEADER, 1);
-        curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
-        curl_setopt($process, CURLOPT_ENCODING , $this->compression);
-        curl_setopt($process, CURLOPT_TIMEOUT, 30);
-        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
-        curl_setopt($process, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($process, CURLOPT_POST, 1);
-        $return = curl_exec($process);
-        curl_close($process);
-        return $return;
-    }
-    function error($error) {
-        echo "<center><div style='width:500px;border: 3px solid #FFEEFF; padding: 3px; background-color: #FFDDFF;font-family: verdana; font-size: 10px'><b>cURL Error</b><br>$error</div></center>";
-        die;
-    }
-}
+$git = GitAuth2::getInstance();
+
+$main = $git->apiRequest('https://api.github.com/repos/yiisoft/yii2');
 
 ?>
+<pre>
+    <?php
+    var_dump($main);
+    ?>
+</pre>
