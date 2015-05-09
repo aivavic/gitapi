@@ -11,6 +11,6 @@ $main = $git->apiRequest('https://api.github.com/repos/yiisoft/yii2');
 ?>
 <pre>
     <?php
-    var_dump($main);
+//    var_dump($main);
     ?>
 </pre>
