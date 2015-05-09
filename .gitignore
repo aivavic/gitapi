@@ -1,2 +1,5 @@
 .idea
 .htaccess
+assets
+protected/runtime
+cookies.txt
